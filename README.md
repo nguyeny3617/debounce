@@ -44,3 +44,10 @@ The trade-off: `throttle` is defined here as debounce with `{ leading: true, tra
 With `leading: false, trailing: false` the wrapped function will never be called at all. We allow the combination rather than throwing, but it's a no-op — don't set both false.
 
 `.flush()` fires a pending trailing call immediately and clears the timer; if nothing is pending it returns `undefined` and does nothing.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
